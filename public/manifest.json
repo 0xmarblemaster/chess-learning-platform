@@ -1,0 +1,54 @@
+{
+  "name": "Шахматная Империя",
+  "short_name": "Шахматы",
+  "description": "Изучайте шахматы на ходу с мобильным приложением Шахматная Империя.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "orientation": "portrait-primary",
+  "lang": "ru-RU",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='24'>♔</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='24'>♔</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Начать Обучение",
+      "short_name": "Курсы",
+      "description": "Перейти к курсам",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='24'>📚</text></svg>",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Практика Головоломок",
+      "short_name": "Головоломки",
+      "description": "Решать шахматные головоломки",
+      "url": "/puzzles",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='0' y='20' font-size='24'>🧩</text></svg>",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

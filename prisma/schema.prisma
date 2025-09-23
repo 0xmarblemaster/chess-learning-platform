@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  STUDENT
+  ADMIN
+  INSTRUCTOR
+}
+
+enum SubscriptionStatus {
+  FREE
+  PREMIUM
+  LIFETIME
+}
+
+model User {
+  id                String   @id @default(cuid())
+  stytchUserId      String   @unique
+  email             String   @unique
+  firstName         String?
+  lastName          String?
+  role              UserRole @default(STUDENT)
+  subscriptionStatus SubscriptionStatus @default(FREE)
+  mobilePreferences Json?
+  profileImageUrl   String?
+  timezone          String?
+  lastLogin         DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  progress          UserProgress[]
+  activities        UserActivity[]
+  devices           UserDevice[]
+  offlineContent    OfflineContent[]
+  
+  @@map("users")
+}
+
+model UserDevice {
+  id              String   @id @default(cuid())
+  userId          String
+  deviceId        String
+  deviceType      String   // mobile, tablet, desktop
+  os              String?
+  browser         String?
+  screenResolution String?
+  isPrimaryDevice Boolean  @default(false)
+  lastUsed        DateTime @default(now())
+  createdAt       DateTime @default(now())
+  
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, deviceId])
+  @@map("user_devices")
+}
+
+model UserActivity {
+  id           String   @id @default(cuid())
+  userId       String
+  activityType String   // login, course_start, content_complete, quiz_taken, puzzle_solved
+  activityData Json?
+  ipAddress    String?
+  userAgent    String?
+  createdAt    DateTime @default(now())
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("user_activities")
+}
+
+model UserProgress {
+  id                   String   @id @default(cuid())
+  userId               String
+  courseId             String?
+  moduleId             String?
+  contentId            String?
+  completionStatus     String   @default("not_started") // not_started, in_progress, completed
+  completionPercentage Float    @default(0)
+  timeSpentMinutes     Int      @default(0)
+  lastAccessed         DateTime @default(now())
+  completedAt          DateTime?
+  quizScore            Float?
+  notes                String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("user_progress")
+}
+
+model OfflineContent {
+  id             String   @id @default(cuid())
+  userId         String
+  contentId      String
+  downloadStatus String   @default("pending") // pending, downloading, completed, failed
+  fileSizeMb     Float?
+  downloadDate   DateTime @default(now())
+  expiresAt      DateTime?
+  
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, contentId])
+  @@map("offline_content")
+}
