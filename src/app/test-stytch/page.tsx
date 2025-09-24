@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createStytchUIClient } from '@stytch/vanilla-js';
+import { StytchUIClient } from '@stytch/vanilla-js';
 
 export default function TestStytchPage() {
   const [stytchStatus, setStytchStatus] = useState<string>('Loading...');
@@ -18,7 +18,7 @@ export default function TestStytchPage() {
       
       // Test creating Stytch client
       try {
-        createStytchUIClient(token);
+        new StytchUIClient(token);
         setStytchClientStatus('✅ Stytch client created successfully');
       } catch (error) {
         setStytchClientStatus(`❌ Error creating client: ${error}`);
