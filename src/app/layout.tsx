@@ -1,16 +1,15 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { AuthProvider } from '@/contexts/AuthContext';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Шахматная Империя - Изучай Шахматы на Телефоне',
-  description: 'Когортный шахматный курс со структурированной программой, обратной связью и практическим обучением.',
-  manifest: '/manifest.json',
-  themeColor: '#1976d2',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+  title: 'Chess Learning Platform',
+  description: 'Learn chess with AI',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -19,15 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru">
-      <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-        <meta name="theme-color" content="#1976d2" />
-      </head>
-      <body className={inter.className}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+    <html lang="ru" suppressHydrationWarning={true}>
+      <body suppressHydrationWarning={true}>
+        {children}
       </body>
     </html>
   );
